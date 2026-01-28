@@ -5,14 +5,17 @@ export class insertBuilder {
 
         this.queryObject = {
             table: tableName,
-            columns: columns,
-            values: "",
+            columns: [...columns],
+            values: [],
             return: "*"
         }
     }
 
-    values (val){
-        this.queryObject.values = val;
+    values (...val){
+        console.log(...val);
+        
+        this.queryObject.values.push(val);
+        
         console.log(this.queryObject);
         
         return this;

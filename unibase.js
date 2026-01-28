@@ -13,4 +13,7 @@ class unibase {
     
 }
 
-const obj = new unibase("unibase.co", "asdfgghjjkkl").table('users').insert('age, name').values('20, omkar')
+const obj = new unibase("unibase.co", "asdfgghjjkkl").table('users')
+                                                    .insert("age", "name")
+                                                    .values(20, "omkar")
+                                                    .values(true, "Piyush");

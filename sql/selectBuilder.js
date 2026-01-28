@@ -7,7 +7,7 @@ export class selectBuilder {
         this.queryObject = {
             table: tableName,
             action: 'SELECT',
-            columns: [...columns],
+            columns: columns,
             conditions: [],
             direction: 'ASC',
             limit: null
@@ -24,13 +24,14 @@ export class selectBuilder {
     }
 
     direction (dir){
-        this.queryObject.direction = 'DESC';
+        this.queryObject.direction = dir;
+        console.log(this.queryObject);
         return this;
     }
 
     limit (num){
          this.queryObject.limit = num;
-         console.log(this.queryObject);
+         
          return this;
     }
 
