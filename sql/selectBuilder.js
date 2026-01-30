@@ -10,6 +10,7 @@ export class selectBuilder {
             columns: columns,
             conditions: [],
             direction: 'ASC',
+            returning: '*',
             limit: null
         }
 
@@ -35,7 +36,12 @@ export class selectBuilder {
          return this;
     }
 
-
+    returning(cols = "*") {
+        this.queryObject.return = cols;
+        console.log(this.queryObject);
+        
+        return this;
+    }
 
    
 

@@ -1,27 +1,27 @@
-export class insertBuilder {
-    constructor(tableName, values, client){
+export class deleteBuilder {
+    constructor(tableName, client){
         this.tableName = tableName;
         this.client = client;
 
         this.queryObject = {
             table: tableName,
+            type: 'DELETE',
             conditions: [],
-            values: values,
-            return: "*"
+            returning: "*"
         }
     }
 
-    where (field, operator, val) {
+    where (field, operator, val){
         this.queryObject.conditions.push({field, operator, val});
         return this;
     }
 
     returning(cols = "*") {
-    this.queryObject.return = cols;
-    console.log(this.queryObject);
-    
+        this.queryObject.returning = cols;
+        console.log(this.queryObject);
+        
         return this;
     }
 
-    
+
 }
