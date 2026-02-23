@@ -1,33 +1,63 @@
-import { Table } from "./sql/table.js";
-import { authService } from "./auth/authService.js";
+import { AuthService } from "./auth/authService.js";
+import { Table } from "./sql/table.js"; 
 
-class unibase {
-    constructor(url, apiKey){
+export class Unibase {
+    constructor(url, apiKey) {
         this.url = url;
         this.apiKey = apiKey;
-
-        this.auth = new authService(this);
         
+
+        this.auth = new AuthService(this);
     }
 
-    table(tableName){
+    table(tableName) {
         return new Table(tableName, this);
     }
 
+    async sendAuthReq(payload) {
+        return this._request(`${this.url}/api/auth`, payload);
+    }
+
+    async sendSqlReq(payload) {
+        return this._request(`${this.url}/api/query`, payload);
+    }
+
+    async query(sql, params = []) {
+        console.log(sql, params);
+        
+
+        return this._request(`${this.url}/api/query`, {
+            action: 'raw_sql',
+            sql: sql,
+            params: params
+        });
+    }
+
     
-    
+    async _request(endpoint, payload) {
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'ub-api-key': this.apiKey 
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+           
+            if (result.success === false) {
+                throw new Error(result.message || "Request Failed");
+            }
+
+
+            return result.data || result.userdata;
+
+        } catch (error) {
+            console.error(`Unibase SDK Error: ${error.message}`);
+            throw error;
+        }
+    }
 }
-
-const obj = new unibase("unibase.co", "asdfgghjjkkl");
-obj
-  .table("users")
-  .insert({name: "omkar" , age: 21, status: "active"})
-  .returning("*");
-
-console.log(obj.auth.updateUser(1, {
- 
-    email: 'omkar',
-    password: '2355'
-}));
-
-                                                    

@@ -1,9 +1,10 @@
 export class authBuilder{
-    constructor(data, client){
-        this.paylaod = data;
+    constructor(payload, client){
+        this.payload = payload;
         this.client = client;
     }
 
-
-    
+    run() {
+      this.client.
+    }
 }

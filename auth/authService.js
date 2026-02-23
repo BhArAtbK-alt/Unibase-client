@@ -1,51 +1,34 @@
-import { authBuilder } from "./authBuilder.js";
-
-export class authService{
-    constructor(client){
-        this.client = client;
-        this.payload = null;
+export class AuthService {
+    constructor(client) {
+        this.client = client; 
     }
 
-    createUser(data){
-        return new authBuilder(
-                { 
-                    Action: 'create_user',
-                    ...data
-                },
-                this.client
-                )
+    async signUp(data) {
+        return this.client.sendAuthReq({
+            action: 'create_user',
+            data: data
+        });
     }
 
-    
-
-    deleteUser(data){
-        return new authBuilder(
-                { 
-                    Action: 'delete_user',
-                    ...data
-                },
-                this.client
-                )
+    async signIn(username, password) {
+        return this.client.sendAuthReq({
+            action: 'login_with_username',
+            data: { username, password }
+        });
     }
 
-    deleteUser(data){
-        return new authBuilder(
-                { 
-                    Action: 'delete_user',
-                    ...data
-                },
-                this.client
-                )
+    async updateUser(userId, updates) {
+        return this.client.sendAuthReq({
+            action: 'update_user',
+            id: userId,
+            data: updates
+        });
     }
 
-    updateUser(userID, data){
-        return new authBuilder(
-                { 
-                    Action: 'update_user',
-                    UserID: userID,
-                    ...data
-                },
-                this.client
-                )
+    async getUserId(username) {
+        return this.client.sendAuthReq({
+            action: 'get_id',
+            data: { username }
+        });
     }
 }

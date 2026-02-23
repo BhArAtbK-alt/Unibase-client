@@ -5,6 +5,7 @@ export class insertBuilder {
 
         this.queryObject = {
             table: tableName,
+            action: 'INSERT',
             conditions: [],
             values: values,
             return: "*"
