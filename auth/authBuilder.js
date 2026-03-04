@@ -1,10 +1,10 @@
-export class authBuilder{
-    constructor(payload, client){
+export class authBuilder {
+    constructor(payload, client) {
         this.payload = payload;
         this.client = client;
     }
 
-    run() {
-      this.client.
+    async run() {
+        return await this.client.sendAuthReq(this.payload);
     }
 }

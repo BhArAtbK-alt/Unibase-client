@@ -17,7 +17,7 @@ export class Unibase {
     async sendAuthReq(payload) {
         
         
-        return this._request(`${this.url}/api/query`, payload);
+        return this._request(`${this.url}/api/auth`, payload);
     }
 
     async sendSqlReq(payload) {

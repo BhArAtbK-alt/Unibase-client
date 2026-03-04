@@ -44,6 +44,12 @@ async function runTestPipeline() {
 
         console.log("\n✨ All tests passed successfully!");
 
+        const newPatient1 = await db.table('test_patients')
+            .insert({ name: "Pokemon", age: 52, status: "happy" })
+            .returning('*')
+            .execute();
+        console.log("✅ Inserted:", newPatient[0].name);
+
     } catch (err) {
         console.error("\n❌ TEST FAILED:");
         console.error("Message:", err.message);
