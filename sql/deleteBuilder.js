@@ -11,7 +11,7 @@ export class deleteBuilder {
         }
     }
 
-    where(field, operator, val) {
+    where(field, operator, value) {
         this.queryObject.conditions.push({ field, operator, val });
         return this;
     }
