@@ -1,5 +1,5 @@
 export class insertBuilder {
-    constructor(tableName, values, client){
+    constructor(tableName, values, client) {
         this.tableName = tableName;
         this.client = client;
 
@@ -8,21 +8,25 @@ export class insertBuilder {
             action: 'INSERT',
             conditions: [],
             values: values,
-            return: "*"
+            returning: "*"
         }
     }
 
-    where (field, operator, val) {
-        this.queryObject.conditions.push({field, operator, val});
+    where(field, operator, value) {
+        this.queryObject.conditions.push({ field, operator, value });
         return this;
     }
 
     returning(cols = "*") {
-    this.queryObject.return = cols;
-    console.log(this.queryObject);
-    
+        this.queryObject.returning = cols;
         return this;
     }
 
-    
+    async execute() {
+        if (!this.queryObject.values) {
+            throw new Error("Insert failed: No values provided.");
+        }
+        
+        return await this.client.sendSqlReq(this.queryObject);
+    }
 }

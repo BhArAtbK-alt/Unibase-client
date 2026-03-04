@@ -10,13 +10,16 @@ export class AuthService {
         });
     }
 
-    async signIn(username, password) {
-        return this.client.sendAuthReq({
-            action: 'login_with_username',
-            data: { username, password }
-        });
-    }
-
+    async signIn({ username, password, email = null }) {
+    return this.client.sendAuthReq({
+        action: 'login_with_username',
+        data: { 
+            username, 
+            password, 
+            email 
+        }
+    });
+}
     async updateUser(userId, updates) {
         return this.client.sendAuthReq({
             action: 'update_user',

@@ -8,7 +8,7 @@ export class updateBuilder {
       set: { ...values },
       conditions: [],
       limit: null,
-      return: "*"
+      returning: "*"
     };
   }
 
@@ -23,10 +23,20 @@ export class updateBuilder {
   }
 
   returning(cols = "*") {
-    this.queryObject.return = cols;
-    console.log(this.queryObject);
-    
+    this.queryObject.returning = cols;
     return this;
+  }
+
+  async execute() {
+    if (this.queryObject.conditions.length === 0) {
+      throw new Error("Safety Error: UPDATE requires at least one .where() condition.");
+    }
+
+    if (!this.queryObject.set || Object.keys(this.queryObject.set).length === 0) {
+      throw new Error("Update failed: No values provided for SET clause.");
+    }
+
+    return await this.client.sendSqlReq(this.queryObject);
   }
 
   build() {

@@ -1,27 +1,31 @@
 export class deleteBuilder {
-    constructor(tableName, client){
+    constructor(tableName, client) {
         this.tableName = tableName;
         this.client = client;
 
         this.queryObject = {
             table: tableName,
-            type: 'DELETE',
+            action: 'DELETE',
             conditions: [],
             returning: "*"
         }
     }
 
-    where (field, operator, val){
-        this.queryObject.conditions.push({field, operator, val});
+    where(field, operator, val) {
+        this.queryObject.conditions.push({ field, operator, val });
         return this;
     }
 
     returning(cols = "*") {
         this.queryObject.returning = cols;
-        console.log(this.queryObject);
-        
         return this;
     }
 
+    async execute() {
+        if (this.queryObject.conditions.length === 0) {
+            throw new Error("Safety Error: DELETE requires at least one .where() condition.");
+        }
 
+        return await this.client.sendSqlReq(this.queryObject);
+    }
 }

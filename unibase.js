@@ -15,10 +15,14 @@ export class Unibase {
     }
 
     async sendAuthReq(payload) {
-        return this._request(`${this.url}/api/auth`, payload);
+        
+        
+        return this._request(`${this.url}/api/query`, payload);
     }
 
     async sendSqlReq(payload) {
+        console.log(payload);
+        
         return this._request(`${this.url}/api/query`, payload);
     }
 
