@@ -12,7 +12,7 @@ export class deleteBuilder {
     }
 
     where(field, operator, value) {
-        this.queryObject.conditions.push({ field, operator, val });
+        this.queryObject.conditions.push({ field, operator, value });
         return this;
     }
 
