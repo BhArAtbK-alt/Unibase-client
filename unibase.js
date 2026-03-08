@@ -1,3 +1,4 @@
+import { Collection } from "./Collection/Collection.js";
 import { AuthService } from "./auth/authService.js";
 import { Table } from "./sql/table.js"; 
 
@@ -14,6 +15,10 @@ export class Unibase {
         return new Table(tableName, this);
     }
 
+    collection(collectionName) {
+        return new Collection(collectionName, this);
+    }
+
     async sendAuthReq(payload) {
         
         
@@ -24,6 +29,12 @@ export class Unibase {
         console.log(payload);
         
         return this._request(`${this.url}/api/query`, payload);
+    }
+
+    async sendDocReq(payload) {
+        console.log("Document Request Payload:", payload);
+
+        return this._request(`${this.url}/api/collections`, payload);
     }
 
     async query(sql, params = []) {
