@@ -5,5 +5,10 @@ const API_KEY = "ub_live_01cf910d6f0b3ebe3454a30497e93e39359e4708";
 
 const ub = new Unibase(API_URL, API_KEY);
 
-const result = await ub.collection("posts").get()
-console.log(result);
+// await ub.graph.createNode("Merchant_A", { location: "Mumbai" });
+// await ub.graph.createNode("Rider_77", { vehicle: "Electric Scooter" });
+
+await ub.graph.connect("Merchant_A", "Rider_77", "ASSIGNED_TO", { order_id: "ORD-101" });
+
+// await ub.graph.disconnect("Merchant_A", "Rider_77", "ASSIGNED_TO");
+

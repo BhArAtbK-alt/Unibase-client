@@ -1,6 +1,9 @@
 import { Collection } from "./Collection/Collection.js";
 import { AuthService } from "./auth/authService.js";
+import { GraphService } from "./graph/GraphService.js";
 import { Table } from "./sql/table.js"; 
+import { StorageService } from "./storage/storageService.js";
+
 
 export class Unibase {
     constructor(url, apiKey) {
@@ -9,6 +12,8 @@ export class Unibase {
         
 
         this.auth = new AuthService(this);
+        this.storage = new StorageService(this);
+        this.graph = new GraphService(this);
     }
 
     table(tableName) {
