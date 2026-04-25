@@ -30,4 +30,12 @@ export class GraphService {
             relationship: relationship
         });
     }
+
+    async getConnections(nodeName, relationship = null) {
+        return this.sdk._request(`${this.sdk.url}/api/graph`, {
+            action: "GET_NEIGHBORS",
+            node_name: nodeName,
+            relationship: relationship
+    });
+}
 }
